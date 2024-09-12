@@ -7,8 +7,10 @@ import getCourseColor from '../utils/getCourseColor';
 import styles from './CoursePage.module.css';
 import { useParams } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function CoursePage() {
+  const navigate = useNavigate();
   const { courseSlug } = useParams();
   const course = getCourseBySlug(courseSlug);
   if (!course) {
@@ -25,6 +27,7 @@ function CoursePage() {
 
   const handleAddWishlistClick = () => {
     addWishlist(course?.slug);
+    navigate('/wishlist');
   };
 
   return (

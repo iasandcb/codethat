@@ -8,7 +8,7 @@ import Avatar from '../components/Avatar';
 import styles from './QuestionListPage.module.css';
 import searchBarStyles from '../components/SearchBar.module.css';
 import searchIcon from '../assets/search.svg';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 function QuestionItem({ question }) {
   return (
@@ -35,18 +35,24 @@ function QuestionItem({ question }) {
 }
 
 function QuestionListPage() {
-  const [keyword, setKeyword] = useState('');
-  const questions = getQuestions();
+  const [searchParam, setSearchParam] = useSearchParams();
+  const initKeyword = searchParam.get('keyword');
+  const [keyword, setKeyword] = useState(initKeyword ?? '');
+  const questions = getQuestions(initKeyword);
 
   const handleKeywordChange = (e) => setKeyword(e.target.value);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSearchParam(keyword ? { keyword } : {});
+  }
   return (
     <ListPage
       variant="community"
       title="커뮤니티"
       description="코드댓의 2만 수강생들과 함께 공부해봐요."
     >
-      <form className={searchBarStyles.form}>
+      <form onSubmit={handleSubmit} className={searchBarStyles.form}>
         <input
           name="keyword"
           value={keyword}

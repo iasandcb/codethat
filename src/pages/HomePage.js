@@ -3,10 +3,14 @@ import Container from '../components/Container';
 import Lined from '../components/Lined';
 import styles from './HomePage.module.css';
 import landingImg from '../assets/landing.svg';
+import { Helmet } from 'react-helmet';
 
 function HomePage() {
   return (
     <>
+      <Helmet>
+        <title>홈페이지! - 코드댓</title>
+      </Helmet>
       <div className={styles.bg} />
       <Container className={styles.container}>
         <div className={styles.texts}>
